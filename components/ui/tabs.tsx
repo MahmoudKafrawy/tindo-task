@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import { ITabsContent, ITabsPanelProps, ITabsProps, ITrigger } from "@/types/interfaces";
+import { cva } from "class-variance-authority";
 import { createContext, useContext, useState } from "react";
 
 const TabContext = createContext({
@@ -6,49 +8,61 @@ const TabContext = createContext({
   setActiveTab: (value: string) => {},
 });
 
-const Tabs = ({
-  children,
-  className,
-  defaultValue,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  defaultValue: string;
-}) => {
+export const tabsVariants = cva("", {
+  variants: {
+    variant: {
+      default: "",
+      vertical: "flex",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+const Tabs = ({ children, className, defaultValue, variant }: ITabsProps) => {
   const [activeTab, setActiveTab] = useState<string>(defaultValue);
+
   return (
     <TabContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className={cn(className)}>{children}</div>
+      <div className={cn(tabsVariants({ variant, className }))}>{children}</div>
     </TabContext.Provider>
   );
 };
 
-const TabsPanel = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={cn(className)}>{children}</div>;
+const TabsPanel = ({ children, className }: ITabsPanelProps) => {
+  return (
+    <div role="tablist" className={cn("h-full", className)}>
+      {children}
+    </div>
+  );
 };
 
-const TabsContent = ({ children, value }: { children: React.ReactNode; value: string }) => {
-  const { activeTab } = useContext(TabContext);
-  if (activeTab == value) return <div data-selected="selected">{children}</div>;
-  return null;
-};
-
-const Trigger = ({ children, className, value }: { children: React.ReactNode; className?: string; value: string }) => {
+const Trigger = ({ children, className, value }: ITrigger) => {
   const { activeTab, setActiveTab } = useContext(TabContext);
 
   return (
     <button
       role="tab"
-      data-state={activeTab === value ? "active" : undefined}
+      aria-controls={`tabpanel-${value}`}
+      data-state={activeTab === value ? "true" : undefined}
       className={cn(
-        "hover:bg-slate-500 cursor-pointer hover:text-white h-full flex items-center p-2 data-[state=active]:bg-slate-600 data-[state=active]:text-white",
+        "hover:bg-slate-500 cursor-pointer hover:text-white h-full flex items-center p-2 data-[state=true]:bg-slate-600 data-[state=true]:text-white",
         className
       )}
+      onKeyDown={() => console.log(value)}
       onClick={() => setActiveTab(value)}
     >
       {children}
     </button>
   );
+};
+
+const TabsContent = ({ children, value }: ITabsContent) => {
+  const { activeTab } = useContext(TabContext);
+
+  if (activeTab == value) return <div data-selected="selected">{children}</div>;
+  return null;
 };
 
 Tabs.TabsPanel = TabsPanel;

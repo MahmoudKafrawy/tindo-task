@@ -34,14 +34,22 @@ example :
 
 ## Tab Props
 
-| Prop           | Description                    | Type     | Default |
-| -------------- | ------------------------------ | -------- | ------- |
-| `defaultValue` | default value for selected tab | `string` |         |
-| `className`    | override default className     | `string` |         |
+| Prop           | Description                    | Type                  |
+| -------------- | ------------------------------ | --------------------- |
+| `defaultValue` | default value for selected tab | `string`              |
+| `className`    | override default className     | `string`              |
+| `variant`      | choose mode of tabs            | `default or Vertical` |
 
 ## Tabs.Trigger Props
 
-| Prop           | Description                | Type     | Default |
-| -------------- | -------------------------- | -------- | ------- |
-| `value       ` | Value for selected tab     | `string` |         |
-| `className`    | override default className | `string` |         |
+| Prop           | Description                | Type     |
+| -------------- | -------------------------- | -------- |
+| `value       ` | Value for selected tab     | `string` |
+| `className`    | override default className | `string` |
+
+## Tabs.TabsContent Props
+
+| Prop           | Description                | Type     |
+| -------------- | -------------------------- | -------- |
+| `value       ` | Value for selected tab     | `string` |
+| `className`    | override default className | `string` |
