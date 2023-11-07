@@ -8,7 +8,7 @@ export interface ITabsProps extends VariantProps<typeof tabsVariants> {
 }
 
 export interface ITabsPanelProps {
-  children: React.ReactNode;
+  children: JSX.Element[];
   className?: string;
 }
 
