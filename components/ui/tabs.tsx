@@ -23,7 +23,8 @@ export const tabsVariants = cva("", {
 
 const Tabs = ({ children, className, defaultValue, variant }: ITabsProps) => {
   const [activeTab, setActiveTab] = useState<string>(defaultValue);
-  const [tabUniqKey] = useState(Math.random());
+  const [tabUniqKey] = useState(Math.floor(Math.random() * 1000));
+  console.log(tabUniqKey);
   return (
     <TabContext.Provider value={{ activeTab, setActiveTab, tabUniqKey }}>
       <div className={cn(tabsVariants({ variant, className }))}>{children}</div>
@@ -43,10 +44,13 @@ const TabsPanel = ({ children, className }: ITabsPanelProps) => {
           setActiveTab(children[activeIndex - 1].props.value);
           document.getElementById(`tab-${tabUniqKey}-${children[activeIndex - 1].props.value}`)?.focus();
         }
-
         if ((e.key == "ArrowRight" || e.key == "ArrowUp") && activeIndex < children.length - 1) {
           setActiveTab(children[activeIndex + 1].props.value);
           document.getElementById(`tab-${tabUniqKey}-${children[activeIndex + 1].props.value}`)?.focus();
+        }
+        if (activeIndex == children.length - 1) {
+          setActiveTab(children[0].props.value);
+          document.getElementById(`tab-${tabUniqKey}-${children[0].props.value}`)?.focus();
         }
       }}
     >
