@@ -42,7 +42,6 @@ const TabsPanel = ({ children, className }: ITabsPanelProps) => {
         if ((e.key == "ArrowLeft" || e.key == "ArrowDown") && activeIndex > 0) {
           setActiveTab(children[activeIndex - 1].props.value);
           document.getElementById(`tab-${tabUniqKey}-${children[activeIndex - 1].props.value}`)?.focus();
-          console.log(document.getElementById(`tab-${tabUniqKey}-${children[activeIndex - 1].props.value}`));
         }
         if ((e.key == "ArrowRight" || e.key == "ArrowUp") && activeIndex < children.length - 1) {
           setActiveTab(children[activeIndex + 1].props.value);
