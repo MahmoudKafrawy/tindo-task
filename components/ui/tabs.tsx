@@ -65,9 +65,9 @@ const Trigger = ({ children, className, value }: ITrigger) => {
     <button
       role="tab"
       id={`tab-${tabUniqKey}-${value}`}
-      data-state={activeTab === value}
+      data-selected={activeTab === value}
       className={cn(
-        "hover:bg-slate-500 cursor-pointer hover:text-white h-full flex items-center p-2 data-[state=true]:bg-slate-600 data-[state=true]:text-white",
+        "hover:bg-slate-500 cursor-pointer hover:text-white h-full flex items-center p-2 data-[selected=true]:bg-slate-600 data-[selected=true]:text-white",
         className
       )}
       onClick={() => setActiveTab(value)}
@@ -77,10 +77,15 @@ const Trigger = ({ children, className, value }: ITrigger) => {
   );
 };
 
-const TabsContent = ({ children, value }: ITabsContent) => {
+const TabsContent = ({ children, value, className }: ITabsContent) => {
   const { activeTab } = useContext(TabContext);
 
-  if (activeTab == value) return <div data-selected="selected">{children}</div>;
+  if (activeTab == value)
+    return (
+      <div data-selected="true" className={cn(className)}>
+        {children}
+      </div>
+    );
   return null;
 };
 

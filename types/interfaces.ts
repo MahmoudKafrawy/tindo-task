@@ -15,6 +15,7 @@ export interface ITabsPanelProps {
 export interface ITabsContent {
   children: React.ReactNode;
   value: string;
+  className?: string;
 }
 
 export interface ITrigger {
